@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Design & Development Setup Agreement</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Signature Pad & HTML2PDF Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        body { background-color: #f3f4f6; padding: 20px; font-family: 'Times New Roman', Times, serif; }
+        .document-container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .signature-pad { border: 1px solid #ccc; border-radius: 4px; width: 100%; height: 150px; cursor: crosshair; }
+        .input-field { border: none; border-bottom: 1px solid #000; outline: none; padding: 2px 5px; font-family: 'Times New Roman', Times, serif; width: auto; background: transparent; }
+        h1, h2, h3 { font-family: Arial, sans-serif; }
+        
+        /* Hidden classes for printing */
+        .print-only { display: none; }
+        .hide-on-print { display: block; }
+    </style>
+</head>
+<body>
+
+    <div class="document-container" id="agreement-document">
+        
+        <div class="text-center mb-8">
+            <h1 class="text-2xl font-bold uppercase underline">Web Design & Development Setup Agreement</h1>
+        </div>
+
+        <div class="mb-6">
+            <p class="mb-2"><strong>Between</strong></p>
+            <p><strong>Nova Digital Labs</strong><br>(Service Provider)</p>
+            
+            <p class="mt-4 mb-2"><strong>And</strong></p>
+            <p>
+                <input type="text" id="clientNameHeader" class="input-field w-64 hide-on-print" placeholder="Client Name">
+                <span id="txt-clientNameHeader" class="print-only font-bold border-b border-black"></span>
+                <br>(Client Name)
+            </p>
+
+            <p class="mt-4">
+                <strong>Agreement Date:</strong> 
+                <input type="date" id="agreementDateHeader" class="input-field hide-on-print">
+                <span id="txt-agreementDateHeader" class="print-only border-b border-black"></span>
+            </p>
+        </div>
+
+        <hr class="border-black mb-6">
+
+        <div class="space-y-4 text-justify">
+            <p>This Web Design & Development Setup Agreement ("Agreement") is entered into on the date mentioned above between <strong>Nova Digital Labs</strong> ("Service Provider") and the above-mentioned Client.</p>
+            <p>Both parties agree to the following terms and conditions:</p>
+
+            <h3 class="font-bold text-lg mt-4">1. Scope of Services</h3>
+            <p>Nova Digital Labs agrees to provide the following services at no development cost:</p>
+            <ul class="list-disc ml-6 space-y-1">
+                <li>Professional website design.</li>
+                <li>Website development and setup.</li>
+                <li>Responsive (mobile-friendly) website.</li>
+                <li>Basic SEO-friendly structure.</li>
+                <li>Website deployment on the provided hosting platform (if applicable).</li>
+                <li>Technical guidance and support during setup.</li>
+            </ul>
+
+            <h3 class="font-bold text-lg mt-4">2. Free Service Policy</h3>
+            <p>The Client acknowledges that:</p>
+            <ul class="list-disc ml-6 space-y-1">
+                <li>The website design and development services are provided free of charge by Nova Digital Labs.</li>
+                <li>No development fee will be charged unless mutually agreed upon for additional custom work outside the agreed scope.</li>
+            </ul>
+
+            <h3 class="font-bold text-lg mt-4">3. Advertising & Revenue Model</h3>
+            <p>As consideration for providing these services free of cost, the Client agrees that:</p>
+            <ol class="list-decimal ml-6 space-y-1">
+                <li>Nova Digital Labs is authorized to display third-party advertisements on the Client's website.</li>
+                <li>Advertisement placement, management, and monetization shall remain under the control of Nova Digital Labs unless otherwise agreed in writing.</li>
+                <li>Revenue generated through these advertisements shall serve as Nova Digital Labs' commission for providing the website and related services.</li>
+                <li>All advertising activities shall comply with the applicable laws and regulations of Nepal, including any government policies governing online advertising.</li>
+            </ol>
+
+            <h3 class="font-bold text-lg mt-4">4. Future Domain & Hosting Migration</h3>
+            <p>If, at any time in the future, the Client wishes to:</p>
+            <ul class="list-disc ml-6 space-y-1">
+                <li>Purchase their own domain,</li>
+                <li>Use independent hosting,</li>
+                <li>Remove the existing hosted setup,</li>
+            </ul>
+            <p>Nova Digital Labs agrees to provide reasonable technical assistance for migration, deployment, and setup. Any third-party costs (such as domain registration, hosting fees, premium services, or licensing fees) shall be borne solely by the Client.</p>
+
+            <h3 class="font-bold text-lg mt-4">5. Client Responsibilities</h3>
+            <p>The Client agrees to:</p>
+            <ul class="list-disc ml-6 space-y-1">
+                <li>Provide accurate information, content, images, and branding materials.</li>
+                <li>Ensure that all submitted content complies with applicable laws.</li>
+                <li>Cooperate with Nova Digital Labs during the development process.</li>
+            </ul>
+
+            <h3 class="font-bold text-lg mt-4">6. Ownership</h3>
+            <ul class="list-disc ml-6 space-y-1">
+                <li>The Client shall retain ownership of their business content, logos, text, and media supplied by them.</li>
+                <li>Nova Digital Labs retains ownership of its proprietary source code, templates, frameworks, scripts, and development tools unless otherwise agreed in writing.</li>
+            </ul>
+
+            <h3 class="font-bold text-lg mt-4">7. Maintenance & Support</h3>
+            <p>Nova Digital Labs may provide technical support at its discretion. Any additional feature requests, redesigns, or major modifications may require a separate agreement.</p>
+
+            <h3 class="font-bold text-lg mt-4">8. Limitation of Liability</h3>
+            <p>Nova Digital Labs shall not be held responsible for:</p>
+            <ul class="list-disc ml-6 space-y-1">
+                <li>Downtime caused by third-party hosting providers.</li>
+                <li>Internet outages.</li>
+                <li>Third-party software failures.</li>
+                <li>Cyber-attacks beyond reasonable control.</li>
+                <li>Financial losses arising from website usage.</li>
+            </ul>
+
+            <h3 class="font-bold text-lg mt-4">9. Termination</h3>
+            <p>Either party may terminate this Agreement by providing written notice. Upon termination:</p>
+            <ul class="list-disc ml-6 space-y-1">
+                <li>Any mutually agreed obligations shall remain enforceable.</li>
+                <li>Advertisement services shall cease unless otherwise agreed.</li>
+                <li>If website migration is requested, Nova Digital Labs will provide reasonable technical assistance.</li>
+            </ul>
+
+            <h3 class="font-bold text-lg mt-4">10. Governing Law</h3>
+            <p>This Agreement shall be governed by and interpreted in accordance with the laws of Nepal. Any disputes arising under this Agreement shall be resolved through mutual discussion. If unresolved, the matter shall be subject to the jurisdiction of the competent courts of Nepal.</p>
+
+            <h3 class="font-bold text-lg mt-4">11. Entire Agreement</h3>
+            <p>This document constitutes the entire agreement between Nova Digital Labs and the Client regarding the services described herein and supersedes any prior verbal or written discussions.</p>
+        </div>
+
+        <hr class="border-black my-8">
+
+        <div class="text-center mb-6">
+            <h2 class="text-xl font-bold uppercase">Signatures</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <!-- Service Provider -->
+            <div>
+                <h3 class="font-bold border-b border-gray-300 pb-2 mb-4">Service Provider</h3>
+                <p><strong>Nova Digital Labs</strong></p>
+                <p class="mt-2">Name of Owner/Partner: <br><strong>_________________________________</strong></p>
+                <p class="mt-2">Designation: Owner / Partner</p>
+                <p class="mt-2">Signature: <br><br><strong>_________________________________</strong></p>
+                <p class="mt-2">Date: <strong>____ / ____ / ______</strong></p>
+            </div>
+
+            <!-- Client -->
+            <div>
+                <h3 class="font-bold border-b border-gray-300 pb-2 mb-4">Client</h3>
+                
+                <label class="block mt-2">Client Name:</label>
+                <input type="text" id="clientNameForm" class="input-field w-full hide-on-print">
+                <span id="txt-clientNameForm" class="print-only border-b border-black w-full inline-block min-h-[1.5rem]"></span>
+
+                <label class="block mt-2">Company/Organization:</label>
+                <input type="text" id="companyName" class="input-field w-full hide-on-print">
+                <span id="txt-companyName" class="print-only border-b border-black w-full inline-block min-h-[1.5rem]"></span>
+
+                <label class="block mt-4 mb-2">Signature:</label>
+                <div class="hide-on-print relative">
+                    <canvas id="clientSignature" class="signature-pad"></canvas>
+                    <button class="absolute top-1 right-1 text-xs bg-red-100 text-red-600 px-2 py-1 rounded" onclick="clientPad.clear()">Clear</button>
+                </div>
+                <img id="img-clientSignature" class="print-only h-24" src="" alt="Client Signature">
+
+                <label class="block mt-4">Date:</label>
+                <input type="date" id="clientDate" class="input-field w-full hide-on-print">
+                <span id="txt-clientDate" class="print-only border-b border-black w-full inline-block min-h-[1.5rem]"></span>
+            </div>
+        </div>
+
+        <hr class="border-gray-300 my-6">
+
+        <!-- Witness -->
+        <div class="w-full md:w-1/2">
+            <h3 class="font-bold border-b border-gray-300 pb-2 mb-4">Witness (Optional)</h3>
+            
+            <label class="block mt-2">Name:</label>
+            <input type="text" id="witnessName" class="input-field w-full hide-on-print">
+            <span id="txt-witnessName" class="print-only border-b border-black w-full inline-block min-h-[1.5rem]"></span>
+
+            <label class="block mt-4 mb-2">Signature:</label>
+            <div class="hide-on-print relative">
+                <canvas id="witnessSignature" class="signature-pad"></canvas>
+                <button class="absolute top-1 right-1 text-xs bg-red-100 text-red-600 px-2 py-1 rounded" onclick="witnessPad.clear()">Clear</button>
+            </div>
+            <img id="img-witnessSignature" class="print-only h-24" src="" alt="Witness Signature">
+
+            <label class="block mt-4">Date:</label>
+            <input type="date" id="witnessDate" class="input-field w-full hide-on-print">
+            <span id="txt-witnessDate" class="print-only border-b border-black w-full inline-block min-h-[1.5rem]"></span>
+        </div>
+
+        <div class="mt-8 pt-4 border-t border-black text-sm italic">
+            <strong>Declaration:</strong> By signing this Agreement, both parties acknowledge that they have read, understood, and voluntarily agree to all the terms and conditions contained herein. The Agreement becomes effective on the date of the final signature by both parties.
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="text-center mt-8 mb-12">
+        <button id="submitBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded shadow-lg text-lg transition duration-200">
+            Sign, Generate PDF & Send
+        </button>
+        <p id="statusMsg" class="mt-4 text-green-600 font-bold hidden">Processing... Please wait.</p>
+    </div>
+
+    <script>
+        // Initialize Signature Pads
+        const clientCanvas = document.getElementById('clientSignature');
+        const witnessCanvas = document.getElementById('witnessSignature');
+        
+        // Adjust Canvas resolution for clear signatures
+        function resizeCanvas(canvas) {
+            const ratio =  Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+        }
+        
+        resizeCanvas(clientCanvas);
+        resizeCanvas(witnessCanvas);
+
+        const clientPad = new SignaturePad(clientCanvas);
+        const witnessPad = new SignaturePad(witnessCanvas);
+
+        // Submit Button Logic
+        document.getElementById('submitBtn').addEventListener('click', async function() {
+            
+            // 1. Validate Form (Ensure client signed)
+            if (clientPad.isEmpty()) {
+                alert("Please provide the Client Signature.");
+                return;
+            }
+
+            const btn = document.getElementById('submitBtn');
+            const status = document.getElementById('statusMsg');
+            btn.disabled = true;
+            btn.innerText = "Generating PDF & Sending...";
+            status.classList.remove('hidden', 'text-red-600');
+            status.classList.add('text-green-600');
+            status.innerText = "Preparing document...";
+
+            // 2. Map Input Fields to Print Text Elements
+            const fieldsToMap = [
+                'clientNameHeader', 'agreementDateHeader', 'clientNameForm', 
+                'companyName', 'clientDate', 'witnessName', 'witnessDate'
+            ];
+
+            fieldsToMap.forEach(id => {
+                document.getElementById('txt-' + id).innerText = document.getElementById(id).value;
+            });
+
+            // 3. Map Signatures to Images
+            document.getElementById('img-clientSignature').src = clientPad.toDataURL();
+            if (!witnessPad.isEmpty()) {
+                document.getElementById('img-witnessSignature').src = witnessPad.toDataURL();
+            } else {
+                document.getElementById('img-witnessSignature').style.display = 'none';
+            }
+
+            // 4. Toggle CSS classes to hide inputs and show static text/images for PDF
+            document.querySelectorAll('.hide-on-print').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.print-only').forEach(el => {
+                if(el.id !== 'img-witnessSignature' || !witnessPad.isEmpty()) {
+                    el.style.display = 'inline-block';
+                }
+            });
+
+            // 5. Generate PDF
+            status.innerText = "Generating PDF File...";
+            const element = document.getElementById('agreement-document');
+            
+            const pdfOptions = {
+                margin:       10,
+                filename:     'Web_Design_Agreement.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            try {
+                // Create PDF Blob
+                const pdfBlob = await html2pdf().set(pdfOptions).from(element).output('blob');
+
+                // 6. Send via Web3Forms API
+                status.innerText = "Sending email to Nova Digital Labs...";
+                
+                const formData = new FormData();
+                // ✅ YOUR WEB3FORMS KEY ADDED HERE
+                formData.append("access_key", "db8b66ff-c9b0-400e-8f71-83af75594f9b");
+                formData.append("subject", "New Signed Agreement Received");
+                formData.append("from_name", document.getElementById('clientNameHeader').value || "Client");
+                formData.append("message", "Attached is the newly signed Web Design & Development Setup Agreement.");
+                formData.append("attachment", pdfBlob, "Signed_Agreement.pdf");
+
+                const response = await fetch("https://api.web3forms.com/submit", {
+                    method: "POST",
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    status.innerText = "✅ Success! The signed agreement has been sent to novadigitallabs@proton.me";
+                    btn.innerText = "Sent Successfully!";
+                } else {
+                    throw new Error(result.message);
+                }
+
+            } catch (error) {
+                console.error("Error:", error);
+                status.classList.add('text-red-600');
+                status.classList.remove('text-green-600');
+                status.innerText = "❌ Failed to send email. Check your internet connection or console for details.";
+                btn.disabled = false;
+                btn.innerText = "Try Again";
+                
+                // Revert UI if it fails so they can edit
+                document.querySelectorAll('.hide-on-print').forEach(el => el.style.display = 'block');
+                document.querySelectorAll('.print-only').forEach(el => el.style.display = 'none');
+            }
+        });
+    </script>
+</body>
+</html>
