@@ -16,17 +16,22 @@
         body { background-color: #f3f4f6; padding: 15px; font-family: 'Times New Roman', Times, serif; }
         .document-container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .signature-pad { border: 1px solid #ccc; border-radius: 4px; width: 100%; height: 150px; cursor: crosshair; touch-action: none; background-color: white; }
-        .input-field { border: none; border-bottom: 1px solid #000; outline: none; padding: 2px 5px; font-family: 'Times New Roman', Times, serif; width: auto; background: transparent; }
+        .input-field { border: none; border-bottom: 1px solid #000; outline: none; padding: 2px 5px; font-family: 'Times New Roman', Times, serif; width: 100%; background: transparent; }
         h1, h2, h3 { font-family: Arial, sans-serif; }
         
         /* Hidden classes for printing */
         .print-only { display: none; }
         .hide-on-print { display: block; }
+        
+        /* Span styling for print mode lines */
+        .print-line { display: inline-block; border-bottom: 1px solid black; width: 100%; min-height: 1.5rem; }
 
-        /* Prevents text from being cut in half across PDF pages */
+        /* STRICT rule to prevent text/images from splitting across pages */
         .avoid-break {
-            page-break-inside: avoid;
-            break-inside: avoid;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
+            display: block;
+            width: 100%;
         }
     </style>
 </head>
@@ -43,22 +48,25 @@
             <p><strong>Nova Digital Labs Pvt. Ltd.</strong><br>(Service Provider)</p>
             
             <p class="mt-4 mb-2"><strong>And</strong></p>
-            <p>
-                <input type="text" id="clientNameHeader" class="input-field w-full md:w-64 hide-on-print" placeholder="Client Name">
-                <span id="txt-clientNameHeader" class="print-only font-bold border-b border-black"></span>
+            <div style="max-width: 300px;">
+                <input type="text" id="clientNameHeader" class="input-field hide-on-print" placeholder="Client Name">
+                <span id="txt-clientNameHeader" class="print-only font-bold print-line"></span>
                 <br>(Client Name)
-            </p>
+            </div>
 
             <p class="mt-4">
                 <strong>Agreement Date:</strong> 
-                <input type="date" id="agreementDateHeader" class="input-field hide-on-print">
-                <span id="txt-agreementDateHeader" class="print-only border-b border-black"></span>
+                <span class="inline-block" style="width: 150px;">
+                    <input type="date" id="agreementDateHeader" class="input-field hide-on-print">
+                    <span id="txt-agreementDateHeader" class="print-only print-line"></span>
+                </span>
             </p>
         </div>
 
         <hr class="border-black mb-6">
 
-        <div class="space-y-4 text-justify">
+        <!-- Changed from text-justify to text-left to fix right-side clipping -->
+        <div class="space-y-4 text-left">
             
             <div class="avoid-break">
                 <p>This Web Design & Development Setup Agreement ("Agreement") is entered into on the date mentioned above between <strong>Nova Digital Labs Pvt. Ltd.</strong> ("Service Provider") and the above-mentioned Client.</p>
@@ -136,69 +144,75 @@
 
         <hr class="border-black my-8 avoid-break">
 
-        <div class="text-center mb-6 avoid-break">
-            <h2 class="text-xl font-bold uppercase">Signatures</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-            <!-- Service Provider (UPDATED) -->
-            <div class="avoid-break">
-                <h3 class="font-bold border-b border-gray-300 pb-2 mb-4">Service Provider</h3>
-                <p class="mt-2">Name of Owner/Partner: <br><strong>Nova Digital Labs Pvt. Ltd.</strong></p>
-                <p class="mt-2">Designation: Owner / Partner</p>
-                <p class="mt-2">Signature:</p>
-                <p class="mt-2">Date: <strong id="autoSpDate"></strong></p>
-            </div>
-
-            <!-- Client -->
-            <div class="avoid-break">
-                <h3 class="font-bold border-b border-gray-300 pb-2 mb-4">Client</h3>
+        <!-- Grouping the main signatures into ONE solid block to prevent splitting -->
+        <div class="avoid-break">
+            <h2 class="text-xl font-bold uppercase text-center mb-6">Signatures</h2>
+            
+            <!-- Switched to flex to force side-by-side alignment even in PDF -->
+            <div class="flex flex-row justify-between gap-8 mb-8">
                 
-                <label class="block mt-2">Client Name:</label>
-                <input type="text" id="clientNameForm" class="input-field w-full hide-on-print">
-                <span id="txt-clientNameForm" class="print-only border-b border-black w-full inline-block min-h-[1.5rem]"></span>
-
-                <label class="block mt-2">Client Email:</label>
-                <input type="email" id="clientEmail" class="input-field w-full hide-on-print" placeholder="client@example.com">
-                <span id="txt-clientEmail" class="print-only border-b border-black w-full inline-block min-h-[1.5rem]"></span>
-
-                <label class="block mt-2">Company/Organization:</label>
-                <input type="text" id="companyName" class="input-field w-full hide-on-print">
-                <span id="txt-companyName" class="print-only border-b border-black w-full inline-block min-h-[1.5rem]"></span>
-
-                <label class="block mt-4 mb-2">Signature:</label>
-                <div class="hide-on-print relative">
-                    <canvas id="clientSignature" class="signature-pad"></canvas>
-                    <button class="absolute top-1 right-1 text-xs bg-red-100 text-red-600 px-2 py-1 rounded" onclick="clientPad.clear()">Clear</button>
+                <!-- Service Provider -->
+                <div class="w-1/2">
+                    <h3 class="font-bold border-b border-gray-300 pb-2 mb-4">Service Provider</h3>
+                    <p class="mt-2">Name of Owner/Partner: <br><strong>Nova Digital Labs Pvt. Ltd.</strong></p>
+                    <p class="mt-2">Designation: Owner / Partner</p>
+                    <p class="mt-2">Signature:</p>
+                    <p class="mt-2 pt-4">Date: <strong id="autoSpDate"></strong></p>
                 </div>
-                <img id="img-clientSignature" class="print-only h-20" src="" alt="Client Signature">
 
-                <label class="block mt-4">Date:</label>
-                <input type="date" id="clientDate" class="input-field w-full hide-on-print">
-                <span id="txt-clientDate" class="print-only border-b border-black w-full inline-block min-h-[1.5rem]"></span>
+                <!-- Client -->
+                <div class="w-1/2">
+                    <h3 class="font-bold border-b border-gray-300 pb-2 mb-4">Client</h3>
+                    
+                    <label class="block mt-2">Client Name:</label>
+                    <input type="text" id="clientNameForm" class="input-field hide-on-print">
+                    <span id="txt-clientNameForm" class="print-only print-line"></span>
+
+                    <label class="block mt-2">Client Email:</label>
+                    <input type="email" id="clientEmail" class="input-field hide-on-print" placeholder="client@example.com">
+                    <span id="txt-clientEmail" class="print-only print-line"></span>
+
+                    <label class="block mt-2">Company/Organization:</label>
+                    <input type="text" id="companyName" class="input-field hide-on-print">
+                    <span id="txt-companyName" class="print-only print-line"></span>
+
+                    <label class="block mt-4 mb-2">Signature:</label>
+                    <div class="hide-on-print relative">
+                        <canvas id="clientSignature" class="signature-pad"></canvas>
+                        <button class="absolute top-1 right-1 text-xs bg-red-100 text-red-600 px-2 py-1 rounded" onclick="clientPad.clear()">Clear</button>
+                    </div>
+                    <!-- Fixed image sizing so it doesn't blow up the layout -->
+                    <img id="img-clientSignature" class="print-only" style="height: 70px; object-fit: contain;" src="" alt="Client Signature">
+
+                    <label class="block mt-4">Date:</label>
+                    <input type="date" id="clientDate" class="input-field hide-on-print">
+                    <span id="txt-clientDate" class="print-only print-line"></span>
+                </div>
             </div>
         </div>
 
         <hr class="border-gray-300 my-6 avoid-break">
 
-        <!-- Witness -->
-        <div class="w-full md:w-1/2 avoid-break">
-            <h3 class="font-bold border-b border-gray-300 pb-2 mb-4">Witness (Optional)</h3>
-            
-            <label class="block mt-2">Name:</label>
-            <input type="text" id="witnessName" class="input-field w-full hide-on-print">
-            <span id="txt-witnessName" class="print-only border-b border-black w-full inline-block min-h-[1.5rem]"></span>
+        <!-- Witness section properly isolated so it moves to a new page completely if needed -->
+        <div class="avoid-break">
+            <div class="w-full md:w-1/2">
+                <h3 class="font-bold border-b border-gray-300 pb-2 mb-4">Witness (Optional)</h3>
+                
+                <label class="block mt-2">Name:</label>
+                <input type="text" id="witnessName" class="input-field hide-on-print">
+                <span id="txt-witnessName" class="print-only print-line"></span>
 
-            <label class="block mt-4 mb-2">Signature:</label>
-            <div class="hide-on-print relative">
-                <canvas id="witnessSignature" class="signature-pad"></canvas>
-                <button class="absolute top-1 right-1 text-xs bg-red-100 text-red-600 px-2 py-1 rounded" onclick="witnessPad.clear()">Clear</button>
+                <label class="block mt-4 mb-2">Signature:</label>
+                <div class="hide-on-print relative">
+                    <canvas id="witnessSignature" class="signature-pad"></canvas>
+                    <button class="absolute top-1 right-1 text-xs bg-red-100 text-red-600 px-2 py-1 rounded" onclick="witnessPad.clear()">Clear</button>
+                </div>
+                <img id="img-witnessSignature" class="print-only" style="height: 70px; object-fit: contain;" src="" alt="Witness Signature">
+
+                <label class="block mt-4">Date:</label>
+                <input type="date" id="witnessDate" class="input-field hide-on-print">
+                <span id="txt-witnessDate" class="print-only print-line"></span>
             </div>
-            <img id="img-witnessSignature" class="print-only h-20" src="" alt="Witness Signature">
-
-            <label class="block mt-4">Date:</label>
-            <input type="date" id="witnessDate" class="input-field w-full hide-on-print">
-            <span id="txt-witnessDate" class="print-only border-b border-black w-full inline-block min-h-[1.5rem]"></span>
         </div>
 
         <div class="mt-8 pt-4 border-t border-black text-sm italic avoid-break">
@@ -218,15 +232,12 @@
     </div>
 
     <script>
-        // Initialize Signature Pads
         const clientCanvas = document.getElementById('clientSignature');
         const witnessCanvas = document.getElementById('witnessSignature');
         
-        // Setup pads with strict white backgrounds
         const clientPad = new SignaturePad(clientCanvas, { backgroundColor: 'rgb(255, 255, 255)' });
         const witnessPad = new SignaturePad(witnessCanvas, { backgroundColor: 'rgb(255, 255, 255)' });
 
-        // Function to fix canvas scaling on mobile
         function resizeCanvas(canvas, pad) {
             const ratio =  Math.max(window.devicePixelRatio || 1, 1);
             canvas.width = canvas.offsetWidth * ratio;
@@ -239,7 +250,6 @@
             resizeCanvas(clientCanvas, clientPad);
             resizeCanvas(witnessCanvas, witnessPad);
 
-            // Automatically set today's date for the Service Provider
             const today = new Date();
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -247,9 +257,7 @@
             document.getElementById('autoSpDate').innerText = `${yyyy}-${mm}-${dd}`;
         });
 
-        // Generate PDF and Mail Logic
         document.getElementById('processBtn').addEventListener('click', async function() {
-            
             if (clientPad.isEmpty()) {
                 alert("Please provide the Client Signature before proceeding.");
                 return;
@@ -257,6 +265,7 @@
 
             const btn = document.getElementById('processBtn');
             const status = document.getElementById('statusMsg');
+            const element = document.getElementById('agreement-document');
             
             const clientName = document.getElementById('clientNameHeader').value || "Client";
             const clientEmail = document.getElementById('clientEmail').value || "Not Provided";
@@ -266,7 +275,7 @@
             status.classList.add('text-blue-600');
             status.innerText = "Generating your PDF...";
 
-            // 1. Map Inputs to Text
+            // Map Inputs
             const fieldsToMap = [
                 'clientNameHeader', 'agreementDateHeader', 'clientNameForm', 'clientEmail', 
                 'companyName', 'clientDate', 'witnessName', 'witnessDate'
@@ -275,7 +284,7 @@
                 document.getElementById('txt-' + id).innerText = document.getElementById(id).value;
             });
 
-            // 2. Map Signatures to Images
+            // Map Signatures
             document.getElementById('img-clientSignature').src = clientPad.toDataURL("image/png");
             if (!witnessPad.isEmpty()) {
                 document.getElementById('img-witnessSignature').src = witnessPad.toDataURL("image/png");
@@ -283,7 +292,7 @@
                 document.getElementById('img-witnessSignature').style.display = 'none';
             }
 
-            // 3. Toggle CSS classes for clean PDF print
+            // Toggle CSS for print
             document.querySelectorAll('.hide-on-print').forEach(el => el.style.display = 'none');
             document.querySelectorAll('.print-only').forEach(el => {
                 if(el.id !== 'img-witnessSignature' || !witnessPad.isEmpty()) {
@@ -291,18 +300,22 @@
                 }
             });
 
-            // 4. Download the PDF automatically with fixed settings
-            const element = document.getElementById('agreement-document');
-            
+            // === CRITICAL FIX FOR TEXT CUT-OFF ON MOBILE ===
+            // Temporarily force the container to desktop width (800px) so the PDF scales perfectly
+            const originalWidth = element.style.width;
+            const originalMaxWidth = element.style.maxWidth;
+            element.style.width = '800px';
+            element.style.maxWidth = '800px';
+
             const pdfOptions = {
-                margin:       15, 
+                margin:       [15, 15, 15, 15], 
                 filename:     `${clientName.replace(/\s+/g, '_')}_Agreement.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { 
                     scale: 2, 
                     useCORS: true, 
                     scrollY: 0, 
-                    windowWidth: 800 
+                    windowWidth: 800 // Matches our forced width
                 },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
                 pagebreak:    { mode: ['css', 'legacy'] } 
@@ -310,12 +323,14 @@
 
             await html2pdf().set(pdfOptions).from(element).save();
 
-            // 5. Open Native Email Client
+            // Revert the temporary width fix back to normal
+            element.style.width = originalWidth;
+            element.style.maxWidth = originalMaxWidth;
+
             status.classList.remove('text-blue-600');
             status.classList.add('text-green-600');
             status.innerHTML = "✅ PDF Downloaded!<br><br>Opening your email app...<br>⚠️ <b>Please attach the downloaded PDF before sending.</b>";
 
-            // Create email body text
             const emailBody = `A client has signed an agreement.
 
 Status: Updated & Signed
@@ -324,19 +339,16 @@ Client Email: ${clientEmail}
 
 (PLEASE REMEMBER TO ATTACH THE DOWNLOADED PDF FILE TO THIS EMAIL)`;
 
-            // Format for URL
             const mailtoLink = `mailto:novadigitallabs@proton.me?subject=${encodeURIComponent(clientName)}&body=${encodeURIComponent(emailBody)}`;
             
-            // Trigger Mail app
             setTimeout(() => {
                 window.location.href = mailtoLink;
                 btn.disabled = false;
                 
-                // Revert document back to edit mode
+                // Revert to Edit mode
                 document.querySelectorAll('.hide-on-print').forEach(el => el.style.display = 'block');
                 document.querySelectorAll('.print-only').forEach(el => el.style.display = 'none');
             }, 1000);
-
         });
     </script>
 </body>
