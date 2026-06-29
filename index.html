@@ -15,7 +15,7 @@
     <style>
         body { background-color: #f3f4f6; padding: 15px; font-family: 'Times New Roman', Times, serif; }
         .document-container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .signature-pad { border: 1px solid #ccc; border-radius: 4px; width: 100%; height: 150px; cursor: crosshair; touch-action: none; }
+        .signature-pad { border: 1px solid #ccc; border-radius: 4px; width: 100%; height: 150px; cursor: crosshair; touch-action: none; background-color: white; }
         .input-field { border: none; border-bottom: 1px solid #000; outline: none; padding: 2px 5px; font-family: 'Times New Roman', Times, serif; width: auto; background: transparent; }
         h1, h2, h3 { font-family: Arial, sans-serif; }
         
@@ -40,7 +40,7 @@
 
         <div class="mb-6 avoid-break">
             <p class="mb-2"><strong>Between</strong></p>
-            <p><strong>Nova Digital Labs</strong><br>(Service Provider)</p>
+            <p><strong>Nova Digital Labs Pvt. Ltd.</strong><br>(Service Provider)</p>
             
             <p class="mt-4 mb-2"><strong>And</strong></p>
             <p>
@@ -61,7 +61,7 @@
         <div class="space-y-4 text-justify">
             
             <div class="avoid-break">
-                <p>This Web Design & Development Setup Agreement ("Agreement") is entered into on the date mentioned above between <strong>Nova Digital Labs</strong> ("Service Provider") and the above-mentioned Client.</p>
+                <p>This Web Design & Development Setup Agreement ("Agreement") is entered into on the date mentioned above between <strong>Nova Digital Labs Pvt. Ltd.</strong> ("Service Provider") and the above-mentioned Client.</p>
                 <p class="mt-2">Both parties agree to the following terms and conditions:</p>
             </div>
 
@@ -141,14 +141,13 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-            <!-- Service Provider -->
+            <!-- Service Provider (UPDATED) -->
             <div class="avoid-break">
                 <h3 class="font-bold border-b border-gray-300 pb-2 mb-4">Service Provider</h3>
-                <p><strong>Nova Digital Labs</strong></p>
-                <p class="mt-2">Name of Owner/Partner: <br><strong>_________________________________</strong></p>
+                <p class="mt-2">Name of Owner/Partner: <br><strong>Nova Digital Labs Pvt. Ltd.</strong></p>
                 <p class="mt-2">Designation: Owner / Partner</p>
-                <p class="mt-2">Signature: <br><br><strong>_________________________________</strong></p>
-                <p class="mt-2">Date: <strong>____ / ____ / ______</strong></p>
+                <p class="mt-2">Signature:</p>
+                <p class="mt-2">Date: <strong id="autoSpDate"></strong></p>
             </div>
 
             <!-- Client -->
@@ -223,20 +222,30 @@
         const clientCanvas = document.getElementById('clientSignature');
         const witnessCanvas = document.getElementById('witnessSignature');
         
-        function resizeCanvas(canvas) {
+        // Setup pads with strict white backgrounds
+        const clientPad = new SignaturePad(clientCanvas, { backgroundColor: 'rgb(255, 255, 255)' });
+        const witnessPad = new SignaturePad(witnessCanvas, { backgroundColor: 'rgb(255, 255, 255)' });
+
+        // Function to fix canvas scaling on mobile
+        function resizeCanvas(canvas, pad) {
             const ratio =  Math.max(window.devicePixelRatio || 1, 1);
             canvas.width = canvas.offsetWidth * ratio;
             canvas.height = canvas.offsetHeight * ratio;
             canvas.getContext("2d").scale(ratio, ratio);
+            pad.clear(); 
         }
         
         window.addEventListener("load", () => {
-            resizeCanvas(clientCanvas);
-            resizeCanvas(witnessCanvas);
-        });
+            resizeCanvas(clientCanvas, clientPad);
+            resizeCanvas(witnessCanvas, witnessPad);
 
-        const clientPad = new SignaturePad(clientCanvas, { backgroundColor: 'rgb(255, 255, 255)' });
-        const witnessPad = new SignaturePad(witnessCanvas, { backgroundColor: 'rgb(255, 255, 255)' });
+            // Automatically set today's date for the Service Provider
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('autoSpDate').innerText = `${yyyy}-${mm}-${dd}`;
+        });
 
         // Generate PDF and Mail Logic
         document.getElementById('processBtn').addEventListener('click', async function() {
@@ -267,9 +276,9 @@
             });
 
             // 2. Map Signatures to Images
-            document.getElementById('img-clientSignature').src = clientPad.toDataURL("image/jpeg");
+            document.getElementById('img-clientSignature').src = clientPad.toDataURL("image/png");
             if (!witnessPad.isEmpty()) {
-                document.getElementById('img-witnessSignature').src = witnessPad.toDataURL("image/jpeg");
+                document.getElementById('img-witnessSignature').src = witnessPad.toDataURL("image/png");
             } else {
                 document.getElementById('img-witnessSignature').style.display = 'none';
             }
@@ -286,17 +295,17 @@
             const element = document.getElementById('agreement-document');
             
             const pdfOptions = {
-                margin:       15, // Adds a consistent 15mm border around the page
+                margin:       15, 
                 filename:     `${clientName.replace(/\s+/g, '_')}_Agreement.pdf`,
                 image:        { type: 'jpeg', quality: 0.98 },
                 html2canvas:  { 
                     scale: 2, 
                     useCORS: true, 
-                    scrollY: 0, // FIX: Forces the generator to start at the exact top
-                    windowWidth: 800 // FIX: Forces a desktop width so text aligns properly
+                    scrollY: 0, 
+                    windowWidth: 800 
                 },
                 jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak:    { mode: ['css', 'legacy'] } // FIX: Tells PDF to respect our "avoid-break" class
+                pagebreak:    { mode: ['css', 'legacy'] } 
             };
 
             await html2pdf().set(pdfOptions).from(element).save();
